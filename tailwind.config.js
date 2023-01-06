@@ -14,6 +14,9 @@ module.exports = {
     },
     colors: {
       primary: "#640BA7",
+      black: "#000000",
+      white: "#ffffff",
+      prueba: "#143041",
     },
   },
 };
