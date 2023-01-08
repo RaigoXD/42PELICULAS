@@ -1,8 +1,8 @@
 import styles from "./Navbar.module.css";
 import logo from "../../Assets/Images/Movies.svg";
-import searchIcon from "../../Assets/Icons/Search.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../Components/Button/Button";
+import SearchBar from "../../Components/SearchBar/SearchBar";
 
 const Navbar = (props) => {
   // Define el elemento seleccionado en la navbar
@@ -16,18 +16,19 @@ const Navbar = (props) => {
 
   // Validacion de si el ususario esta logueado en el sistema
   const [userLogged, setUserLogged] = useState(false);
-
   const [hamburger, setHamburger] = useState(false);
   let toggleHamburger = () => {
     setHamburger(!hamburger);
   };
+
+  const [searchValue, setSearchValue] = useState();
 
   let HtmlNavbar = (
     // Contenedor externo
     <div className="h-screen bg-black">
       {/* Contenedor de la navbar */}
       <div
-        className={`${styles.navbarContainer} flex justify-between items-center bg-gradient-to-b from-black px-6 md:px-8 lg:px-12 xl:px-20`}
+        className={`${styles.navbarContainer} absolute left-0 top-0 w-full flex justify-between items-center bg-gradient-to-b from-black px-6 md:px-8 lg:px-12 xl:px-20`}
       >
         {/* Logo de la pagina */}
         <img
@@ -126,6 +127,7 @@ const Navbar = (props) => {
           </div>
         </div>
 
+        {/* Menu que se despliega cuando el hamburger se activa */}
         <div
           className={
             `absolute w-80 h-screen top-0 bg-secondary md:hidden ` +
@@ -146,18 +148,10 @@ const Navbar = (props) => {
               </div>
             )}
 
-            <div className="relative mt-4">
-              <input
-                type="search"
-                className="px-3 rounded-xl w-full h-8 focus:outline-primary/20"
-                placeholder="Buscar..."
-              />
-              <img
-                src={searchIcon}
-                alt="Search Icon"
-                className="absolute right-3 top-2 w-4"
-              />
-            </div>
+            {/* Bbarra de busqueda */}
+            <SearchBar setSearchValue={setSearchValue}></SearchBar>
+
+            {/* EL SIGUIENTE DIV ES PARA SELECCIONAR ENTRE PELICULAS Y SERIES PARA APLICAR LOS FILTROS DE GENERO */}
             {/* <div className="grid grid-cols-2 mt-4">
               <div
                 onClick={() => {
@@ -197,6 +191,7 @@ const Navbar = (props) => {
               </div>
             </div> */}
 
+            {/* Contenedor de generos */}
             <div className="mt-4">
               <p className="text-white text-xl">Géneros</p>
               <div className="mx-3 mt-2 grid grid-cols-2 gap-4">
@@ -258,7 +253,7 @@ const Navbar = (props) => {
       </div>
 
       {/* Contenedor del contenido de la pantalla */}
-      <div className={styles.contentContainer}>{props.component}</div>
+      <div className="w-full h-screen">{props.component}</div>
     </div>
   );
   return HtmlNavbar;
